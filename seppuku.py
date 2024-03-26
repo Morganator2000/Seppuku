@@ -9,9 +9,11 @@ import re
 import random
 import string
 
+# Generate new names for variables and functions.
 def generate_random_string(length=10):
     return ''.join(random.choices(string.ascii_lowercase, k=length))
 
+# Delete comments
 def remove_comments(code):
     # Remove single-line comments
     code = re.sub(r'#.*', '', code)
@@ -20,7 +22,7 @@ def remove_comments(code):
     return code
 
 def refactor_names(code):
-    # Match variable and function names using regular expressions
+    # Regex pattern for matching variables and functions.
     variable_pattern = r'\b([a-zA-Z_]\w*)\s*(?=\=)'
     function_pattern = r'\bdef\s+([a-zA-Z_]\w*)\s*\('
     
@@ -28,7 +30,7 @@ def refactor_names(code):
     variables = set(re.findall(variable_pattern, code))
     functions = set(re.findall(function_pattern, code))
     
-    # Generate random names for variables and functions
+    # Generate random names for variables and functions, then replace them
     mapping = {}
     for var in variables:
         new_name = generate_random_string()
@@ -41,7 +43,7 @@ def refactor_names(code):
     
     return code, mapping
 
-def sepuku(input_file, output_file):
+def seppuku(input_file, output_file):
     with open(input_file, 'r') as file:
         original_code = file.read()
 
@@ -57,10 +59,10 @@ def sepuku(input_file, output_file):
 
     return name_mapping
 
-if __name__ == "__main__":
-    input_file = "intro_to_coding - Copy.py"
-    output_file = "intro_to_coding - Copy.py"
-    name_mapping = sepuku(input_file, output_file)
-    print("Variable and function name mapping:")
-    for old_name, new_name in name_mapping.items():
-        print(f"{old_name} -> {new_name}")
+#Start of the script.
+input_file = "intro_to_coding - Copy.py"
+name_mapping = seppuku(input_file, input_file)
+#Print new mappings, just in case you need to reverse the changes.
+print("Variable and function name mapping:")
+for old_name, new_name in name_mapping.items():
+    print(f"{old_name} -> {new_name}")
